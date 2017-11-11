@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <menuitem name="Course" id="menu_course_root" sequence="99" />
+
+        <menuitem id="menu_course_course"
+            name="Course"
+            parent="menu_course_root"
+            action="action_view_course_course" 
+            sequence="1" />
+
+        <record model="ir.ui.view" id="view_course_form">
+            <field name="name">course.course.form</field>
+            <field name="model">course.course</field>
+            <field name="arch" type="xml">
+                <form string="Course">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_mail_tree">
+            <field name="name">course.course.tree</field>
+            <field name="model">course.course</field>
+            <field name="arch" type="xml">
+                <tree string="Course List" decoration-muted="name in ('Test')" decoration-info="name=='outgoing'" decoration-danger="name=='exception'">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_course_search">
+            <field name="name">course.course.search</field>
+            <field name="model">course.course</field>
+            <field name="arch" type="xml">
+                <search string="Course Search">
+                    <field name="name" filter_domain="['|', '|',('name','ilike',self)]" string="Name"/>
+                    <group expand="0" string="Extended Filters...">
+                        <field name="name"/>
+                    </group>
+                    <group expand="0" string="Group By">
+                        <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_view_course_course" model="ir.actions.act_window">
+            <field name="name">Course</field>
+            <field name="res_model">course.course</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_course_search"/>
+        </record>
+
+    </data>
+</odoo>
